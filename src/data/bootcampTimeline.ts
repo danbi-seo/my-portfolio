@@ -1,0 +1,120 @@
+import type { Step, Band } from "../types/timeline";
+
+export const BOOTCAMP_STEPS: Step[] = [
+  {
+    key: "html",
+    title: "HTML/CSS",
+    desc: "기초 마크업/스타일링",
+    start: "2025-05-22T00:00:00+09:00",
+    end: "2025-05-28T23:59:59+09:00",
+  },
+  {
+    key: "js1",
+    title: "JavaScript",
+    desc: "자바스크립트 언어 기초/핵심 문법",
+    start: "2025-05-29T00:00:00+09:00",
+    end: "2025-06-16T23:59:59+09:00",
+  },
+  {
+    key: "js2",
+    title: "JS 최종과제 & GitHub",
+    desc: "계산기 과제 · Git 워크플로우 학습",
+    start: "2025-06-17T00:00:00+09:00",
+    end: "2025-06-24T23:59:59+09:00",
+  },
+  {
+    key: "react",
+    title: "React 학습",
+    desc: "컴포넌트/상태/훅",
+    start: "2025-06-26T00:00:00+09:00",
+    end: "2025-07-22T23:59:59+09:00",
+  },
+  {
+    key: "react-mini",
+    title: "React 미니프로젝트",
+    desc: "영화사이트 제작하기",
+    start: "2025-07-23T00:00:00+09:00",
+    end: "2025-07-30T23:59:59+09:00",
+  },
+  {
+    key: "node",
+    title: "Node.js",
+    desc: "런타임/서버 기초",
+    start: "2025-07-31T00:00:00+09:00",
+    end: "2025-08-06T23:59:59+09:00",
+  },
+  {
+    key: "db",
+    title: "Database",
+    desc: "모델링/쿼리",
+    start: "2025-08-07T00:00:00+09:00",
+    end: "2025-08-13T23:59:59+09:00",
+  },
+  {
+    key: "aws",
+    title: "AWS",
+    desc: "배포/인프라 기초",
+    start: "2025-08-14T00:00:00+09:00",
+    end: "2025-08-21T23:59:59+09:00",
+  },
+  {
+    key: "ts",
+    title: "TypeScript",
+    desc: "타입스크립트 기초 문법",
+    start: "2025-08-22T00:00:00+09:00",
+    end: "2025-08-28T23:59:59+09:00",
+  },
+  {
+    key: "rn",
+    title: "React Native",
+    desc: "모바일 애플리케이션 제작하기",
+    start: "2025-08-29T00:00:00+09:00",
+    end: "2025-09-04T23:59:59+09:00",
+  },
+  {
+    key: "main",
+    title: "메인프로젝트",
+    desc: "팀 빌딩/개발/배포(OZShop)",
+    start: "2025-09-08T00:00:00+09:00",
+    end: "2025-10-13T23:59:59+09:00",
+    badge: "MAIN PROJECT",
+  },
+  {
+    key: "ext",
+    title: "익스턴십 프로젝트",
+    desc: "팀 프로젝트(StudyHub)",
+    start: "2025-10-14T00:00:00+09:00",
+    end: "2025-11-17T23:59:59+09:00",
+    badge: "EXTERNSHIP",
+  },
+  {
+    key: "grad",
+    title: "수료",
+    desc: "종료! 수고하셨습니다!",
+    start: "2025-11-19T00:00:00+09:00",
+    end: "2025-11-19T18:40:59+09:00",
+    badge: "FINAL",
+  },
+];
+
+export const BOOTCAMP_BANDS: Band[] = [
+  {
+    key: "lead",
+    label: "스터디 리드 (8/11~10/1)",
+    start: "2025-08-11T00:00:00+09:00",
+    end: "2025-10-01T23:59:59+09:00",
+    href: "https://bristle-eel-2c9.notion.site/24939597f3db8025a79fca0029c39a9e?v=24939597f3db8006bb36000ccf9eac07",
+  },
+  {
+    key: "follow",
+    label: "스터디 참여 (6/1~6/10)",
+    start: "2025-06-01T00:00:00+09:00",
+    end: "2025-06-10T23:59:59+09:00",
+  },
+  {
+    key: "follow",
+    label: "스터디 참여 (7/4~7/9)",
+    start: "2025-07-04T00:00:00+09:00",
+    end: "2025-07-09T23:59:59+09:00",
+  },
+];
