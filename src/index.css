@@ -10,7 +10,7 @@ html,
 body,
 .scrollbar-gold {
   scrollbar-width: thin;
-  scrollbar-color: #cfa263 rgba(255, 215, 160, 0.08);
+  scrollbar-color: linear-gradient(to bottom right, #f87171, #f472b6);
 }
 
 html::-webkit-scrollbar,
@@ -31,7 +31,7 @@ body::-webkit-scrollbar-track,
 html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb,
 .scrollbar-gold::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #f7d7a0, #cfa263 60%, #a87532);
+  background: linear-gradient(to bottom right, #ef4444, #ec4899);
   border-radius: 9999px;
   border: 2px solid rgba(0, 0, 0, 0.35);
   box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.25);
@@ -40,7 +40,7 @@ body::-webkit-scrollbar-thumb,
 html::-webkit-scrollbar-thumb:hover,
 body::-webkit-scrollbar-thumb:hover,
 .scrollbar-gold::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #fce3b8, #e2b076 60%, #b27a3d);
+  background: linear-gradient(to bottom right, #f87171, #f472b6);
 }
 
 .scrollbar-gold {

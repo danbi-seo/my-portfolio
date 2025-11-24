@@ -10,6 +10,7 @@ import { AnimatePresence, MotionConfig } from "framer-motion";
 import { Nav } from "./components/Nav";
 import { RouteFallback } from "./components/spinner/RouteFallback";
 
+const Landing = lazy(() => import("./pages/Landing"));
 const Home = lazy(() => import("./pages/Home"));
 const Projects = lazy(() => import("./pages/Projects"));
 const About = lazy(() => import("./pages/About"));
@@ -19,6 +20,7 @@ const Timeline = lazy(() => import("./pages/Timeline"));
 
 const ROUTE_ORDER = [
   "/",
+  "/home",
   "/about",
   "/stack",
   "/timeline",
@@ -28,11 +30,20 @@ const ROUTE_ORDER = [
 
 function AnimatedRoutes() {
   const location = useLocation();
+
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route
           index
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <Landing />
+            </Suspense>
+          }
+        />
+        <Route
+          path="home"
           element={
             <Suspense fallback={<RouteFallback />}>
               <Home />
@@ -89,6 +100,8 @@ function AppShell() {
   const navigate = useNavigate();
   const [wheelLock, setWheelLock] = useState(false);
 
+  const isLandingPage = location.pathname === "/";
+
   const goStep = useCallback(
     (dir: 1 | -1) => {
       const currentPath =
@@ -109,6 +122,7 @@ function AppShell() {
   );
 
   useEffect(() => {
+    if (isLandingPage) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === "PageDown") {
         e.preventDefault();
@@ -125,7 +139,7 @@ function AppShell() {
 
   // 휠로 페이지 넘기기 (가로 슬라이드 느낌)
   const handleWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
-    if (wheelLock) return;
+    if (isLandingPage || wheelLock) return;
 
     const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
     if (Math.abs(delta) < 20) return; // 너무 미세한 스크롤은 무시
@@ -138,7 +152,7 @@ function AppShell() {
 
   return (
     <div className="min-h-screen" onWheel={handleWheel}>
-      <Nav />
+      {!isLandingPage && <Nav />}
       <AnimatedRoutes />
     </div>
   );
