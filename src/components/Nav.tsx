@@ -8,19 +8,19 @@ interface Project {
   path: string;
 }
 
-// 실제 프로젝트 목록
+// 프로젝트 목록
 const projects: Project[] = [
-  { id: "1", name: "E-Commerce Platform", path: "/projects/ecommerce" },
-  { id: "2", name: "Real-time Chat", path: "/projects/chat" },
-  { id: "3", name: "Dashboard Analytics", path: "/projects/dashboard" },
-  { id: "4", name: "Mobile Banking UI", path: "/projects/banking" },
+  { id: "1", name: "Pokédex", path: "/projects/pokemon" },
+  { id: "2", name: "DB Movie Box", path: "/projects/moviebox" },
+  { id: "3", name: "Pchedule", path: "/projects/pchedule" },
+  { id: "4", name: "StudyHub", path: "/projects/studyhub" },
 ];
 
 export function Nav() {
   const mainLinks = [
     { to: "/home", label: "홈", icon: Home },
-    { to: "/about", label: "둘러보기", icon: Compass },
-    { to: "/stack", label: "보관함", icon: Library },
+    { to: "/explore", label: "둘러보기", icon: Compass },
+    { to: "/library", label: "보관함", icon: Library },
   ];
 
   return (

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,24 +8,23 @@ import {
 } from "react-router";
 import { AnimatePresence, MotionConfig } from "framer-motion";
 import { Nav } from "./components/Nav";
-import { RouteFallback } from "./components/spinner/RouteFallback";
+import { RouteFallback } from "./spinner/RouteFallback"; 
+import Pokemon from "./pages/Pokemon";
+import MovieBox from "./pages/MovieBox";
+import Pchedule from "./pages/Pchedule";
+import StudyHub from "./pages/StudyHub";
 
 const Landing = lazy(() => import("./pages/Landing"));
 const Home = lazy(() => import("./pages/Home"));
-const Projects = lazy(() => import("./pages/Projects"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Stack = lazy(() => import("./pages/Stack"));
-const Timeline = lazy(() => import("./pages/Timeline"));
+const Explore = lazy(() => import("./pages/Explore"));
+const Library = lazy(() => import("./pages/Library"));
+
 
 const ROUTE_ORDER = [
   "/",
   "/home",
-  "/about",
-  "/stack",
-  "/timeline",
-  "/projects",
-  "/contact",
+  "/explore",
+  "/library",
 ] as const;
 
 function AnimatedRoutes() {
@@ -51,42 +50,50 @@ function AnimatedRoutes() {
           }
         />
         <Route
-          path="timeline"
+          path="explore"
           element={
             <Suspense fallback={<RouteFallback />}>
-              <Timeline />
+              <Explore />
             </Suspense>
           }
         />
         <Route
-          path="projects"
+          path="library"
           element={
             <Suspense fallback={<RouteFallback />}>
-              <Projects />
+              <Library />
             </Suspense>
           }
         />
         <Route
-          path="about"
+          path="/projects/pokemon"
           element={
             <Suspense fallback={<RouteFallback />}>
-              <About />
+              <Pokemon />
             </Suspense>
           }
         />
         <Route
-          path="contact"
+          path="/projects/moviebox"
           element={
             <Suspense fallback={<RouteFallback />}>
-              <Contact />
+              <MovieBox />
             </Suspense>
           }
         />
         <Route
-          path="stack"
+          path="/projects/pchedule"
           element={
             <Suspense fallback={<RouteFallback />}>
-              <Stack />
+              <Pchedule />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/projects/studyhub"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <StudyHub />
             </Suspense>
           }
         />
@@ -99,8 +106,19 @@ function AppShell() {
   const location = useLocation();
   const navigate = useNavigate();
   const [wheelLock, setWheelLock] = useState(false);
+  const scrollAccumulator = useRef(0);
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const isLandingPage = location.pathname === "/";
+  const isProjectDetailPage = location.pathname.startsWith("/projects/");
+
+  // 페이지 전환 시 스크롤 최상단으로 이동
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
+    }
+  }, [location.pathname]);
 
   const goStep = useCallback(
     (dir: 1 | -1) => {
@@ -122,7 +140,7 @@ function AppShell() {
   );
 
   useEffect(() => {
-    if (isLandingPage) return;
+    if (isLandingPage || isProjectDetailPage) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === "PageDown") {
         e.preventDefault();
@@ -135,25 +153,69 @@ function AppShell() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [goStep]);
+  }, [goStep, isLandingPage, isProjectDetailPage]);
 
-  // 휠로 페이지 넘기기 (가로 슬라이드 느낌)
+  // 개선된 휠 이벤트 핸들러 - 페이지 스크롤 끝 감지
   const handleWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
-    if (isLandingPage || wheelLock) return;
+    if (isLandingPage || wheelLock || isProjectDetailPage) return;
+    if (!mainRef.current) return;
 
+    const target = mainRef.current;
+    const scrollTop = target.scrollTop;
+    const scrollHeight = target.scrollHeight;
+    const clientHeight = target.clientHeight;
+    
+    // 더 정확한 끝 감지 (1px 여유)
+    const isAtTop = scrollTop <= 1;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
+    
     const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-    if (Math.abs(delta) < 20) return; // 너무 미세한 스크롤은 무시
+    
+    // 너무 미세한 스크롤은 무시
+    if (Math.abs(delta) < 10) return;
 
-    goStep(delta > 0 ? 1 : -1);
+    // 페이지 끝에 도달했을 때만 페이지 전환
+    if ((isAtBottom && delta > 0) || (isAtTop && delta < 0)) {
+      // 스크롤 누적
+      scrollAccumulator.current += delta;
 
-    setWheelLock(true);
-    setTimeout(() => setWheelLock(false), 600);
+      // 이전 타이머 제거
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      // 일정 시간 후 누적값 초기화
+      scrollTimeout.current = setTimeout(() => {
+        scrollAccumulator.current = 0;
+      }, 200);
+
+      // 임계값 설정 - 더 크게 설정하여 실수로 넘어가는 것 방지
+      const THRESHOLD = 300;
+
+      // 누적 스크롤이 임계값을 넘으면 페이지 전환
+      if (Math.abs(scrollAccumulator.current) >= THRESHOLD) {
+        goStep(scrollAccumulator.current > 0 ? 1 : -1);
+        scrollAccumulator.current = 0;
+        
+        setWheelLock(true);
+        setTimeout(() => setWheelLock(false), 1000);
+      }
+    } else {
+      // 페이지 중간에서는 누적값 초기화
+      scrollAccumulator.current = 0;
+    }
   };
 
   return (
-    <div className="min-h-screen" onWheel={handleWheel}>
+    <div className="flex min-h-screen bg-[#0a0a0a]">
       {!isLandingPage && <Nav />}
-      <AnimatedRoutes />
+      <main 
+        ref={mainRef}
+        onWheel={handleWheel}
+        className={`${isLandingPage ? "w-full" : "flex-1 ml-60"} overflow-y-auto h-screen`}
+      >
+        <AnimatedRoutes />
+      </main>
     </div>
   );
 }
