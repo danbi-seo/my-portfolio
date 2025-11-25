@@ -9,7 +9,7 @@ const timeline = [
     description: 'React, JavaScript, Node.js, Next.js, HTML, CSS 프로그래밍 학습',
     details: ['가계부 만들기 Study 참여', '프로젝트 4회 진행'],
     type: 'education',
-    color: 'from-purple-500 to-pink-500'
+    color: 'from-indigo-500 to-purple-500'
   },
   {
     period: '2024.07 - 2024.12',
@@ -17,7 +17,7 @@ const timeline = [
     role: '인턴',
     description: '공공외교 지원업무, 웹 콘텐츠 업무, 행사 영상 제작 및 유튜브 영상 제작',
     type: 'work',
-    color: 'from-blue-500 to-cyan-500'
+    color: 'from-indigo-500 to-purple-500'
   },
   {
     period: '2021.02 - 2023.05',
@@ -26,7 +26,7 @@ const timeline = [
     description: '포토샵, 일러스트로 웹디자인 제작, 프리미어프로로 영상 편집',
     details: ['로고제작, 제품 브로슈어 제작','와디즈 펀딩 제작참여', '매년 4회씩 국가 지원프로그램 참여'],
     type: 'work',
-    color: 'from-orange-500 to-red-500'
+    color: 'from-indigo-500 to-purple-500'
   },
   {
     period: '2019.02 - 2021.02',
@@ -34,7 +34,7 @@ const timeline = [
     role: '비서',
     description: '비서 업무, 경영지원팀 지원 업무, 회계 및 전산 업무 지원',
     type: 'work',
-    color: 'from-green-500 to-emerald-500'
+    color: 'from-indigo-500 to-purple-500'
   },
   {
     period: '2013.03 - 2015.02',
@@ -71,7 +71,7 @@ const sections = [
   { id: 'github', label: 'GitHub 활동', icon: Github },
   { id: 'devlog', label: 'Dev Log / TIL', icon: BookOpen },
   { id: 'certificates', label: '자격증 / 수상', icon: Award },
-  { id: 'resume', label: 'PDF 이력서', icon: FileText }
+  { id: 'resume', label: '이력서', icon: FileText }
 ];
 
 export default function LibraryPage() {
@@ -270,10 +270,17 @@ export default function LibraryPage() {
               <Github className="w-12 h-12 text-purple-400 mb-4 group-hover:scale-110 transition-transform" />
               <h3 className="text-2xl font-bold mb-2">GitHub 활동</h3>
               <p className="text-white/60 mb-6">개인 프로젝트 및 협업 프로젝트 </p>
+              <a
+              href="https://github.com/danbi-seo"  
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
               <button className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors">
                 <span>GitHub 방문하기</span>
                 <ExternalLink size={16} />
               </button>
+              </a>
             </motion.div>
 
             {/* Dev Log */}
@@ -305,15 +312,22 @@ export default function LibraryPage() {
           >
             <FileText className="w-16 h-16 text-purple-400 mx-auto mb-6" />
             <h2 className="text-3xl font-bold mb-4">
-              PDF 이력서
+              이력서
             </h2>
             <p className="text-white/60 mb-8 text-lg">
-              전체 이력서를 PDF로 다운로드 받으세요
+              자세한 이력서를 확인해보세요!
             </p>
-            <button className="px-10 py-5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all hover:scale-105 flex items-center gap-3 mx-auto">
-              <FileText size={24} />
-              <span>이력서 다운로드</span>
-            </button>
+            <a
+              href="https://www.notion.so/29fa78e465db81899dcecc0bad002288#29fa78e465db81e79aa2e319cd8ce4d3"  
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <button className="px-10 py-5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all hover:scale-105 flex items-center gap-3 mx-auto">
+                <FileText size={24} />
+                <span>이력서 보러가기</span>
+              </button>
+            </a>
           </motion.div>
         </div>
       </section>

@@ -1,4 +1,12 @@
-import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { motion } from 'framer-motion';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,7 +16,7 @@ import {
 } from "react-router";
 import { AnimatePresence, MotionConfig } from "framer-motion";
 import { Nav } from "./components/Nav";
-import { RouteFallback } from "./spinner/RouteFallback"; 
+import { RouteFallback } from "./spinner/RouteFallback";
 import Pokemon from "./pages/Pokemon";
 import MovieBox from "./pages/MovieBox";
 import Pchedule from "./pages/Pchedule";
@@ -19,13 +27,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Explore = lazy(() => import("./pages/Explore"));
 const Library = lazy(() => import("./pages/Library"));
 
-
-const ROUTE_ORDER = [
-  "/",
-  "/home",
-  "/explore",
-  "/library",
-] as const;
+const ROUTE_ORDER = ["/", "/home", "/explore", "/library"] as const;
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -109,9 +111,19 @@ function AppShell() {
   const scrollAccumulator = useRef(0);
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mainRef = useRef<HTMLDivElement>(null);
+  const prevLocationRef = useRef(location.pathname);
 
   const isLandingPage = location.pathname === "/";
   const isProjectDetailPage = location.pathname.startsWith("/projects/");
+
+  // 랜딩↔홈 전환 체크
+  const isLandingHomeTransition =
+    (prevLocationRef.current === "/" && location.pathname === "/home") ||
+    (prevLocationRef.current === "/home" && location.pathname === "/");
+
+  useEffect(() => {
+    prevLocationRef.current = location.pathname;
+  }, [location.pathname]);
 
   // 페이지 전환 시 스크롤 최상단으로 이동
   useEffect(() => {
@@ -155,7 +167,7 @@ function AppShell() {
     return () => window.removeEventListener("keydown", onKey);
   }, [goStep, isLandingPage, isProjectDetailPage]);
 
-  // 개선된 휠 이벤트 핸들러 - 페이지 스크롤 끝 감지
+  // 페이지 스크롤 끝 감지
   const handleWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
     if (isLandingPage || wheelLock || isProjectDetailPage) return;
     if (!mainRef.current) return;
@@ -164,14 +176,12 @@ function AppShell() {
     const scrollTop = target.scrollTop;
     const scrollHeight = target.scrollHeight;
     const clientHeight = target.clientHeight;
-    
-    // 더 정확한 끝 감지 (1px 여유)
     const isAtTop = scrollTop <= 1;
     const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1;
-    
+
     const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-    
-    // 너무 미세한 스크롤은 무시
+
+    // 너무 미세한 스크롤은 무시하게
     if (Math.abs(delta) < 10) return;
 
     // 페이지 끝에 도달했을 때만 페이지 전환
@@ -196,7 +206,7 @@ function AppShell() {
       if (Math.abs(scrollAccumulator.current) >= THRESHOLD) {
         goStep(scrollAccumulator.current > 0 ? 1 : -1);
         scrollAccumulator.current = 0;
-        
+
         setWheelLock(true);
         setTimeout(() => setWheelLock(false), 1000);
       }
@@ -208,7 +218,20 @@ function AppShell() {
 
   return (
     <div className="flex min-h-screen bg-[#0a0a0a]">
-      {!isLandingPage && <Nav />}
+      <AnimatePresence mode="wait">
+        {!isLandingPage && (
+          <motion.div
+            key="navbar"
+            initial={isLandingHomeTransition ? { x: -240, opacity: 0 } : false}
+            animate={{ x: 0, opacity: 1 }}
+            exit={isLandingHomeTransition ? { x: -240, opacity: 0 } : { x: 0, opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
+            <Nav />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
       <main 
         ref={mainRef}
         onWheel={handleWheel}
