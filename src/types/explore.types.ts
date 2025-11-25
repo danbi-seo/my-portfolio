@@ -7,7 +7,7 @@ export interface Project {
   image: string;
   tags: string[];
   highlight: string;
-  path: string; 
+  path: string;
 }
 
 export interface Category {

@@ -6,7 +6,6 @@ import { exploreData, highlights } from '../data/explore';
 export default function Explore() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#121212] to-[#0a0a0a] text-white overflow-y-auto">
-      {/* Header */}
       <section className="pt-20 pb-12 px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div

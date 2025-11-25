@@ -3,7 +3,6 @@ import type { Highlight } from '../../types/explore.types';
 
 interface HighlightCardProps {
   item: Highlight;
-  title: string;
   index: number;
 }
 

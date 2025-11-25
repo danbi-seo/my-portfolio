@@ -1,5 +1,5 @@
 import { Code2, Zap, Search, Calendar, Users } from 'lucide-react';
-import type { Category } from '../types/explore.types';
+import type { Category, Highlight } from '../types/explore.types'; 
 
 export const exploreData: Category[] = [
   {
