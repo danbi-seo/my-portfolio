@@ -3,6 +3,15 @@ import { Clock, Github, BookOpen, Award, FileText, Briefcase, GraduationCap, Use
 
 const timeline = [
   {
+    period: '2025.12 - 2026.01',
+    company: '텐핑거스',
+    role: '프론트엔드 인턴',
+    description: '데이트팝 어플 및 사이트 개발, 관리',
+    details: ['환불 계좌 입력 폼 페이지 개발', '이미지 프리로드 커스텀 컴포넌트 교체', ''],
+    type: 'work',
+    color: 'from-indigo-500 to-purple-500'
+  },
+  {
     period: '2025.05 - 2025.11',
     company: '초격자 프론트엔드 개발 부트캠프',
     role: '오즈코딩스쿨',
@@ -24,7 +33,7 @@ const timeline = [
     company: '트랜디협동조합',
     role: '콘텐츠 디자이너',
     description: '포토샵, 일러스트로 웹디자인 제작, 프리미어프로로 영상 편집',
-    details: ['로고제작, 제품 브로슈어 제작','와디즈 펀딩 제작참여', '매년 4회씩 국가 지원프로그램 참여'],
+    details: ['로고제작, 제품 브로슈어 제작', '와디즈 펀딩 제작참여', '매년 4회씩 국가 지원프로그램 참여'],
     type: 'work',
     color: 'from-indigo-500 to-purple-500'
   },
@@ -157,9 +166,9 @@ export default function LibraryPage() {
                       </div>
                       <span className="text-sm text-white/50 whitespace-nowrap">{item.period}</span>
                     </div>
-                    
+
                     <p className="text-white/70 text-sm mb-3">{item.description}</p>
-                    
+
                     {item.details && (
                       <ul className="space-y-1">
                         {item.details.map((detail, i) => (
@@ -271,15 +280,15 @@ export default function LibraryPage() {
               <h3 className="text-2xl font-bold mb-2">GitHub 활동</h3>
               <p className="text-white/60 mb-6">개인 프로젝트 및 협업 프로젝트 </p>
               <a
-              href="https://github.com/danbi-seo"  
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block"
-            >
-              <button className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors">
-                <span>GitHub 방문하기</span>
-                <ExternalLink size={16} />
-              </button>
+                href="https://github.com/danbi-seo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <button className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors">
+                  <span>GitHub 방문하기</span>
+                  <ExternalLink size={16} />
+                </button>
               </a>
             </motion.div>
 
@@ -318,7 +327,7 @@ export default function LibraryPage() {
               자세한 이력서를 확인해보세요!
             </p>
             <a
-              href="https://www.notion.so/29fa78e465db81899dcecc0bad002288#29fa78e465db81e79aa2e319cd8ce4d3"  
+              href="https://www.notion.so/29fa78e465db81899dcecc0bad002288#29fa78e465db81e79aa2e319cd8ce4d3"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block"

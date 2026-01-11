@@ -1,7 +1,25 @@
-import { Code2, Zap, Search, Calendar, Users } from 'lucide-react';
-import type { Category, Highlight } from '../types/explore.types'; 
+import { Code2, Zap, Search, Calendar, Users, Briefcase } from 'lucide-react';
+import type { Category, Highlight } from '../types/explore.types';
 
 export const exploreData: Category[] = [
+  {
+    id: 'experience',
+    title: '실무 경험',
+    icon: Briefcase,
+    color: 'from-purple-500 to-pink-500',
+    description: '인턴십과 실무 프로젝트 경험',
+    projects: [
+      {
+        title: '텐핑거스',
+        subtitle: 'Frontend Developer Intern',
+        tech: 'React · TypeScript · Tailwind CSS',
+        image: '/images/tenfingers-office.jpg',
+        tags: ['실무 경험', '협업', 'Git Flow', '코드 리뷰'],
+        highlight: '인턴십',
+        path: '/experience/tenfingers'
+      }
+    ]
+  },
   {
     id: 'skill-based',
     title: '스킬 기반 프로젝트',
